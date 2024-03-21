@@ -27,6 +27,8 @@ class ScratchHomeScreen extends StatefulWidget {
 }
 
 class _ScratchHomeScreenState extends State<ScratchHomeScreen> {
+  final GlobalKey<FormState> _formKey = GlobalKey<FormState>();
+
   Future<void> scratchDialog(BuildContext ctx, int index) {
     return showDialog(
         context: ctx,
@@ -64,36 +66,40 @@ class _ScratchHomeScreenState extends State<ScratchHomeScreen> {
             children: [
               _buildDepthFrameZero(context),
               12.v.sbH,
-              Padding(
-                padding: EdgeInsets.symmetric(horizontal: 16.h),
-                child: BlocSelector<HomeBloc, HomeBlocState,
-                    TextEditingController?>(
-                  selector: (state) {
-                    return state.searchController;
-                  },
-                  builder: (context, state) {
-                    return CustomSearchView(
-                      controller: state,
-                      textInputAction: TextInputAction.done,
-                      onFieldSubmitted: (v) => unFocusAndCallBack(() {
-                        context
-                            .read<HomeBloc>()
-                            .add(HomeBlocLuckyNumberSubmit());
-                      }),
-                      validator: (value) {
-                        if (value == null || value.isEmpty) {
-                          return 'Please enter a number';
-                        }
-                        final number = int.tryParse(value);
-                        if (number == null || number < 1 || number > 99) {
-                          return 'Please enter a number between 1 and 99';
-                        }
-                        return null;
-                      },
-                      textInputType: TextInputType.number,
-                      hintText: "Enter your lucky numbers",
-                    );
-                  },
+              Form(
+                key: _formKey,
+                child: Padding(
+                  padding: EdgeInsets.symmetric(horizontal: 16.h),
+                  child: BlocSelector<HomeBloc, HomeBlocState,
+                      TextEditingController?>(
+                    selector: (state) {
+                      return state.searchController;
+                    },
+                    builder: (context, state) {
+                      return CustomSearchView(
+                        controller: state,
+                        textInputAction: TextInputAction.done,
+                        onFieldSubmitted: (v) => unFocusAndCallBack(() {
+                          if (!_formKey.currentState!.validate()) return;
+                          context
+                              .read<HomeBloc>()
+                              .add(HomeBlocLuckyNumberSubmit());
+                        }),
+                        validator: (value) {
+                          if (value == null || value.isEmpty) {
+                            return 'Lucky number will not be empty';
+                          }
+                          final number = int.tryParse(value);
+                          if (number == null || number < 1 || number > 99) {
+                            return 'Please enter a number between 1 and 99';
+                          }
+                          return null;
+                        },
+                        textInputType: TextInputType.number,
+                        hintText: "Enter your lucky numbers",
+                      );
+                    },
+                  ),
                 ),
               ),
               24.v.sbH,
@@ -234,7 +240,7 @@ class _ScratchHomeScreenState extends State<ScratchHomeScreen> {
             child: CustomButton(
                 text: "Submit",
                 onPressed: () => unFocusAndCallBack(() {
-                      log("11");
+                      if (!_formKey.currentState!.validate()) return;
                       BlocProvider.of<HomeBloc>(context)
                           .add(HomeBlocLuckyNumberSubmit());
                     })),

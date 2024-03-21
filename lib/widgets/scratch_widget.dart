@@ -81,7 +81,7 @@ class _ScratchWidgetState extends State<ScratchWidget> {
                   child: AnimatedOpacity(
                     duration: const Duration(milliseconds: 100),
                     opacity: _opacity,
-                    child: Container(
+                    child: SizedBox(
                       width: MediaQuery.of(context).size.width,
                       child: Column(
                         children: [

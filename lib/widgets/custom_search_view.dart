@@ -73,7 +73,6 @@ class CustomSearchView extends StatelessWidget {
           controller: controller,
           // focusNode: focusNode ?? FocusNode(),
           textInputAction: textInputAction,
-          autovalidateMode: AutovalidateMode.onUserInteraction,
           style: textStyle ?? CustomTextStyles.bodyLargeOnPrimaryContainer,
           keyboardType: textInputType,
           maxLines: maxLines ?? 1,

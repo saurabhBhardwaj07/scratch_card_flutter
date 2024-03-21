@@ -1,5 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:flutter/widgets.dart';
 import 'package:scratch_card/core/app_exports.dart';
 
 class CustomButton extends StatelessWidget {
