@@ -3,10 +3,6 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:scratch_card/bloc/home_bloc/home_bloc.dart';
 import 'package:scratch_card/core/app_exports.dart';
-import 'package:scratch_card/widgets/auto_pick_number.dart';
-import 'package:scratch_card/widgets/scratch_card_item.dart';
-import 'package:scratch_card/widgets/scratch_widget.dart';
-import 'package:scratch_card/widgets/widgets.dart';
 
 class ScratchHomeScreen extends StatefulWidget {
   const ScratchHomeScreen({Key? key})
